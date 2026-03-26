@@ -52,3 +52,26 @@ main {
 .card:hover {
   background: #005fa3;
 }
+
+
+/* Styles for View Data Page */
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table, th, td {
+  border: 1px solid #ccc;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  background-color: #f0f0f0;
+}
