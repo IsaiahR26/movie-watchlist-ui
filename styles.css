@@ -75,3 +75,29 @@ th, td {
 th {
   background-color: #f0f0f0;
 }
+
+/* Styles for Add Movies Page */
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+input, button, select {
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  background: #0077cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #005fa3;
+}
