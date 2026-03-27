@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Movie</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Movie Watchlist</h1>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="view.html">View Data</a>
+      <a href="add.html">Add New Movie</a>
+      <a href="edit.html">Edit Movie</a>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Edit Movie</h2>
+    <p>Select a movie, update the fields, and save the changes.</p>
+
+    <label for="movie-select">Choose a movie:</label>
+    <select id="movie-select">
+      <option value="">Select a movie</option>
+    </select>
+
+    <form id="edit-form">
+      <input type="text" id="edit-title" placeholder="Movie Title" required />
+      <input type="text" id="edit-genre" placeholder="Genre" required />
+      <input type="text" id="edit-status" placeholder="Status" required />
+      <button type="submit">Update Movie</button>
+    </form>
+
+    <p id="edit-message"></p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

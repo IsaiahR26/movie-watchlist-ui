@@ -1,56 +1,107 @@
-
+/* Code for all Pages */
+/* Gets the Movies from Local Storage */
 
 let movies = JSON.parse(localStorage.getItem("movies")) || [
   { id: 1, title: "Inception", genre: "Sci-Fi", status: "Watched" },
-  { id: 2, title: "Interstellar", genre: "Sci-Fi", status: "Watched" },
-  { id: 3, title: "The Dark Knight", genre: "Action", status: "Plan to Watch" }
+  { id: 2, title: "Interstellar", genre: "Sci-Fi", status: "Watched" }
 ];
 
-function saveMovies() {
+
+/* Saves the Movies */
+
+function save() {
   localStorage.setItem("movies", JSON.stringify(movies));
 }
 
-function loadMovies() {
-  const tableBody = document.getElementById("movie-table-body");
-  if (!tableBody) return;
+/* View Data Page */
+/* Views the Page and Shows Data */
 
-  tableBody.innerHTML = "";
+const table = document.getElementById("movie-table-body");
 
-  movies.forEach(movie => {
+/* m Variable Represents a Single Movie at a Time */
+if (table) {
+  movies.forEach(m => {
     const row = document.createElement("tr");
     row.innerHTML = `
-      <td>${movie.id}</td>
-      <td>${movie.title}</td>
-      <td>${movie.genre}</td>
-      <td>${movie.status}</td>
+      <td>${m.id}</td>
+      <td>${m.title}</td>
+      <td>${m.genre}</td>
+      <td>${m.status}</td>
     `;
-    tableBody.appendChild(row);
+    table.appendChild(row);
   });
 }
 
-const movieForm = document.getElementById("movie-form");
+/* Add New Movie Page */
+/* Adds the Page with the Form Submit */
 
-if (movieForm) {
-  movieForm.addEventListener("submit", function (e) {
+const addForm = document.getElementById("movie-form");
+
+/* e Variable Represents the Submit Event Triggered by the Form */
+
+if (addForm) {
+  addForm.addEventListener("submit", e => {
     e.preventDefault();
 
-    const title = document.getElementById("title").value;
-    const genre = document.getElementById("genre").value;
-    const status = document.getElementById("status").value;
-
     const newMovie = {
-      id: movies.length ? movies[movies.length - 1].id + 1 : 1,
-      title,
-      genre,
-      status
+      id: movies.length + 1,
+      title: document.getElementById("title").value,
+      genre: document.getElementById("genre").value,
+      status: document.getElementById("status").value
     };
 
     movies.push(newMovie);
-    saveMovies();
+    save();
 
-    document.getElementById("message").textContent = "Record has been saved.";
-    movieForm.reset();
+    document.getElementById("message").textContent = "Saved!";
+    addForm.reset();
   });
 }
 
-loadMovies();
+/* Edit Movies Page */
+/* Edits the Page with Dropdown */
+
+const select = document.getElementById("movie-select");
+
+if (select) {
+  /* Fill Dropdown */
+  movies.forEach(m => {
+    const option = document.createElement("option");
+    option.value = m.id;
+    option.textContent = m.title;
+    select.appendChild(option);
+  });
+
+  /* Auto Fills in the Form*/
+  select.addEventListener("change", () => {
+    const movie = movies.find(m => m.id == select.value);
+
+    if (movie) {
+      document.getElementById("edit-title").value = movie.title;
+      document.getElementById("edit-genre").value = movie.genre;
+      document.getElementById("edit-status").value = movie.status;
+    }
+  });
+}
+
+/* Edit Movies Page */
+/* Edits and Updates the Page */
+
+const editForm = document.getElementById("edit-form");
+
+if (editForm) {
+  editForm.addEventListener("submit", e => {
+    e.preventDefault();
+
+    const movie = movies.find(m => m.id == select.value);
+
+    if (movie) {
+      movie.title = document.getElementById("edit-title").value;
+      movie.genre = document.getElementById("edit-genre").value;
+      movie.status = document.getElementById("edit-status").value;
+
+      save();
+      document.getElementById("edit-message").textContent = "Updated!";
+    }
+  });
+}
