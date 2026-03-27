@@ -101,3 +101,19 @@ button {
 button:hover {
   background: #005fa3;
 }
+
+/* Styles for the Delete Button on View Data Page */
+
+.delete-btn {
+  background: crimson;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 8px;
+  width: 100%;   /* 👈 THIS makes it stretch */
+}
+
+.delete-btn:hover {
+  opacity: 0.9;
+}

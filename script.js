@@ -18,19 +18,36 @@ function save() {
 
 const table = document.getElementById("movie-table-body");
 
-/* m Variable Represents a Single Movie at a Time */
 if (table) {
+  showMovies();
+}
+
+function showMovies() {
+  table.innerHTML = "";
+
   movies.forEach(m => {
     const row = document.createElement("tr");
+
     row.innerHTML = `
       <td>${m.id}</td>
       <td>${m.title}</td>
       <td>${m.genre}</td>
       <td>${m.status}</td>
+      <td><button class="delete-btn" onclick="deleteMovie(${m.id})">Delete</button></td>
     `;
+
     table.appendChild(row);
   });
 }
+
+/* Function that Deletes the Movie with a Click of the Button */
+
+function deleteMovie(id) {
+  movies = movies.filter(m => m.id !== id);
+  save();
+  showMovies();
+}
+
 
 /* Add New Movie Page */
 /* Adds the Page with the Form Submit */
