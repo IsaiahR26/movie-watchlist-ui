@@ -28,9 +28,15 @@
 
     <form id="edit-form">
       <input type="text" id="edit-title" placeholder="Movie Title" required />
-      <input type="text" id="edit-genre" placeholder="Genre" required />
+      <input type="number" id="edit-release_year" placeholder="Release Year" required />
       <input type="text" id="edit-status" placeholder="Status" required />
-      <button type="submit">Update Movie</button>
+      <input type="number" id="edit-rating" placeholder="Rating" required />
+
+      <label>
+        <input type="checkbox" id="edit-is_favorite" /> Favorite
+      </label>
+
+    <button type="submit">Update Movie</button>
     </form>
 
     <p id="edit-message"></p>

@@ -78,55 +78,36 @@ if (addForm) {
 /* Edit Movies Page */
 /* Edits the Page with Dropdown */
 
-const select = document.getElementById("movie-select");
+//  const select = document.getElementById("movie-select");
 
-if (select) {
-  /* Fill Dropdown */
-  movies.forEach(m => {
-    const option = document.createElement("option");
-    option.value = m.id;
-    option.textContent = m.title;
-    select.appendChild(option);
-  });
+//if (select) {
+//  /* Fill Dropdown */
+// movies.forEach(m => {
+//    const option = document.createElement("option");
+//    option.value = m.id;
+//    option.textContent = m.title;
+//    select.appendChild(option);
+//  });
+//
+//  /* Auto Fills in the Form*/
+//  select.addEventListener("change", () => {
+//    const movie = movies.find(m => m.id == select.value);
+//
+//    if (movie) {
+//      document.getElementById("edit-title").value = movie.title;
+//      document.getElementById("edit-genre").value = movie.genre;
+//     document.getElementById("edit-status").value = movie.status;
+//    }
+//  });
+//} 
 
-  /* Auto Fills in the Form*/
-  select.addEventListener("change", () => {
-    const movie = movies.find(m => m.id == select.value);
 
-    if (movie) {
-      document.getElementById("edit-title").value = movie.title;
-      document.getElementById("edit-genre").value = movie.genre;
-      document.getElementById("edit-status").value = movie.status;
-    }
-  });
-}
 
-/* Edit Movies Page */
-/* Edits and Updates the Page */
-
-const editForm = document.getElementById("edit-form");
-
-if (editForm) {
-  editForm.addEventListener("submit", e => {
-    e.preventDefault();
-
-    const movie = movies.find(m => m.id == select.value);
-
-    if (movie) {
-      movie.title = document.getElementById("edit-title").value;
-      movie.genre = document.getElementById("edit-genre").value;
-      movie.status = document.getElementById("edit-status").value;
-
-      save();
-      document.getElementById("edit-message").textContent = "Updated!";
-    }
-  });
-}
-
+/* Views Movies Connected to APi Endpoint */
 
 const API_URL = "https://movie-watchlist-api-7252.onrender.com/api/v1/movies";
 
-/* Views Movies Connected to APi Endpoint */
+
 async function loadMovies() {
   try {
     const response = await fetch(API_URL);
@@ -191,6 +172,87 @@ if (addMovieForm) {
     } catch (error) {
       console.error("Error adding movie:", error);
       alert("Error saving movie.");
+    }
+  });
+}
+
+/* Edits Movies Connected to the API Endpoint */
+
+
+const movieSelect = document.getElementById("movie-select");
+const editForm = document.getElementById("edit-form");
+
+let allMovies = [];
+
+async function loadMovieDropdown() {
+  if (!movieSelect) return;
+
+  try {
+    const response = await fetch(API_URL);
+    allMovies = await response.json();
+
+    movieSelect.innerHTML = `<option value="">Select a movie</option>`;
+
+    allMovies.forEach((movie) => {
+      const option = document.createElement("option");
+      option.value = movie.id;
+      option.textContent = movie.title;
+      movieSelect.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Error loading dropdown:", error);
+  }
+}
+
+if (movieSelect) {
+  loadMovieDropdown();
+
+  movieSelect.addEventListener("change", () => {
+    const selectedId = parseInt(movieSelect.value);
+    const movie = allMovies.find((m) => m.id === selectedId);
+
+    if (!movie) return;
+
+    document.getElementById("edit-title").value = movie.title;
+    document.getElementById("edit-release_year").value = movie.release_year;
+    document.getElementById("edit-status").value = movie.status;
+    document.getElementById("edit-rating").value = movie.rating;
+    document.getElementById("edit-is_favorite").checked = movie.is_favorite;
+  });
+}
+
+if (editForm) {
+  editForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const selectedId = movieSelect.value;
+
+    const updatedMovie = {
+      title: document.getElementById("edit-title").value,
+      release_year: parseInt(document.getElementById("edit-release_year").value),
+      status: document.getElementById("edit-status").value,
+      rating: parseInt(document.getElementById("edit-rating").value),
+      is_favorite: document.getElementById("edit-is_favorite").checked
+    };
+
+    try {
+      const response = await fetch(`${API_URL}/${selectedId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updatedMovie)
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update movie");
+      }
+
+      alert("Record has been updated.");
+      loadMovieDropdown();
+    } catch (error) {
+      console.error("Error updating movie:", error);
+      alert("Error updating movie.");
     }
   });
 }
