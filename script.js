@@ -122,3 +122,41 @@ if (editForm) {
     }
   });
 }
+
+
+/* */
+
+const API_URL = "https://movie-watchlist-api-7252.onrender.com/api/v1/movies";
+
+async function loadMovies() {
+  try {
+    const response = await fetch(API_URL);
+    const movies = await response.json();
+
+    const tableBody = document.getElementById("movie-table-body");
+
+    if (!tableBody) return;
+
+    tableBody.innerHTML = "";
+
+    movies.forEach(movie => {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${movie.id}</td>
+        <td>${movie.title}</td>
+        <td>${movie.release_year}</td>
+        <td>${movie.status}</td>
+        <td>${movie.rating}</td>
+        <td>${movie.is_favorite ? "Yes" : "No"}</td>
+      `;
+
+      tableBody.appendChild(row);
+    });
+
+  } catch (error) {
+    console.error("Error loading movies:", error);
+  }
+}
+
+loadMovies();
