@@ -124,22 +124,20 @@ if (editForm) {
 }
 
 
-/* */
-
 const API_URL = "https://movie-watchlist-api-7252.onrender.com/api/v1/movies";
 
+/* Views Movies Connected to APi Endpoint */
 async function loadMovies() {
   try {
     const response = await fetch(API_URL);
     const movies = await response.json();
 
     const tableBody = document.getElementById("movie-table-body");
-
     if (!tableBody) return;
 
     tableBody.innerHTML = "";
 
-    movies.forEach(movie => {
+    movies.forEach((movie) => {
       const row = document.createElement("tr");
 
       row.innerHTML = `
@@ -153,10 +151,46 @@ async function loadMovies() {
 
       tableBody.appendChild(row);
     });
-
   } catch (error) {
     console.error("Error loading movies:", error);
   }
 }
 
 loadMovies();
+
+/* Adds Movies Conected to the API Endpoint */
+const addMovieForm = document.getElementById("movie-form");
+
+if (addMovieForm) {
+  addMovieForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const newMovie = {
+      title: document.getElementById("title").value,
+      release_year: parseInt(document.getElementById("release_year").value),
+      status: document.getElementById("status").value,
+      rating: parseInt(document.getElementById("rating").value),
+      is_favorite: document.getElementById("is_favorite").checked
+    };
+
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(newMovie)
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to save movie");
+      }
+
+      alert("Record has been saved.");
+      addMovieForm.reset();
+    } catch (error) {
+      console.error("Error adding movie:", error);
+      alert("Error saving movie.");
+    }
+  });
+}

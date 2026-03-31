@@ -22,10 +22,16 @@
     <p>Enter movie information below.</p>
 
     <form id="movie-form">
-      <input type="text" id="title" placeholder="Movie Title" required />
-      <input type="text" id="genre" placeholder="Genre" required />
-      <input type="text" id="status" placeholder="Status" required />
-      <button type="submit">Save Movie</button>
+       <input type="text" id="title" placeholder="Movie Title" required />
+       <input type="number" id="release_year" placeholder="Release Year" required />
+       <input type="text" id="status" placeholder="Status" required />
+       <input type="number" id="rating" placeholder="Rating" required />
+    
+        <label>
+          <input type="checkbox" id="is_favorite" /> Favorite
+        </label>
+
+        <button type="submit">Save Movie</button>
     </form>
 
     <p id="message"></p>
