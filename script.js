@@ -128,6 +128,7 @@ async function loadMovies() {
         <td>${movie.status}</td>
         <td>${movie.rating}</td>
         <td>${movie.is_favorite ? "Yes" : "No"}</td>
+        <td><button onclick="deleteMovie(${movie.id})">Delete</button></td>
       `;
 
       tableBody.appendChild(row);
@@ -255,4 +256,23 @@ if (editForm) {
       alert("Error updating movie.");
     }
   });
+}
+
+async function deleteMovie(id) {
+  try {
+    const response = await fetch(`${API_URL}/${id}`, {
+      method: "DELETE"
+    });
+
+    if (!response.ok) {
+      throw new Error("Delete failed");
+    }
+
+    alert("Movie deleted!");
+    loadMovies();
+
+  } catch (error) {
+    console.error("Error deleting movie:", error);
+    alert("Error deleting movie.");
+  }
 }
