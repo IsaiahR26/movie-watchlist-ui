@@ -1,52 +1,56 @@
 /* Code for all Pages */
 /* Gets the Movies from Local Storage */
 
-let movies = JSON.parse(localStorage.getItem("movies")) || [
-  { id: 1, title: "Inception", genre: "Sci-Fi", status: "Watched" },
-  { id: 2, title: "Interstellar", genre: "Sci-Fi", status: "Watched" }
-];
+
+// Old Local Storage Version 
+
+//let movies = JSON.parse(localStorage.getItem("movies")) || [
+//  { id: 1, title: "Inception", genre: "Sci-Fi", status: "Watched" },
+//  { id: 2, title: "Interstellar", genre: "Sci-Fi", status: "Watched" }
+//];
 
 
 /* Saves the Movies */
 
-function save() {
-  localStorage.setItem("movies", JSON.stringify(movies));
-}
+//function save() {
+//  localStorage.setItem("movies", JSON.stringify(movies));
+//}
 
 /* View Data Page */
 /* Views the Page and Shows Data */
 
-const table = document.getElementById("movie-table-body");
+//const table = document.getElementById("movie-table-body");
 
-if (table) {
-  showMovies();
-}
+//if (table) {
+//  showMovies();
+//}
 
-function showMovies() {
-  table.innerHTML = "";
+//function showMovies() {
+//  table.innerHTML = "";
 
-  movies.forEach(m => {
-    const row = document.createElement("tr");
+//  movies.forEach(m => {
+//    const row = document.createElement("tr");
 
-    row.innerHTML = `
-      <td>${m.id}</td>
-      <td>${m.title}</td>
-      <td>${m.genre}</td>
-      <td>${m.status}</td>
-      <td><button class="delete-btn" onclick="deleteMovie(${m.id})">Delete</button></td>
-    `;
+//    row.innerHTML = `
+//      <td>${m.id}</td>
+//      <td>${m.title}</td>
+//      <td>${m.genre}</td>
+//      <td>${m.status}</td>
+//      <td><button class="delete-btn" onclick="deleteMovie(${m.id})">Delete</button></td>
+//    `;
 
-    table.appendChild(row);
-  });
-}
+//    table.appendChild(row);
+//  });
+//}
 
 /* Function that Deletes the Movie with a Click of the Button */
 
-function deleteMovie(id) {
-  movies = movies.filter(m => m.id !== id);
-  save();
-  showMovies();
-}
+//function deleteMovie(id) {
+//  movies = movies.filter(m => m.id !== id);
+//  save();
+//  showMovies();
+//}
+
 
 
 /* Add New Movie Page */
