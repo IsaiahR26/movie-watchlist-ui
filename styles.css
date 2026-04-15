@@ -111,7 +111,7 @@ button:hover {
   border-radius: 6px;
   cursor: pointer;
   padding: 8px;
-  width: 100%;   /* 👈 THIS makes it stretch */
+  width: 100%;   
 }
 
 .delete-btn:hover {
